@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import satellites from './api/satellite.js'
+import satellites from './models/satellite.js'
 import { isIsoDateTime } from './util.js'
 
 const app = express()
