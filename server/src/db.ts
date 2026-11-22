@@ -7,12 +7,12 @@ db.exec(`
   CREATE TABLE telemetry (
     satelliteId TEXT PRIMARY KEY,
     timestamp TEXT NOT NULL,
-    altitude REAL NOT NULL,
-    velocity REAL NOT NULL,
+    altitude FLOAT NOT NULL,
+    velocity FLOAT NOT NULL,
     status TEXT NOT NULL,
-    positionX REAL,
-    positionY REAL,
-    positionZ REAL
+    positionX FLOAT,
+    positionY FLOAT,
+    positionZ FLOAT
   )
 `)
 
