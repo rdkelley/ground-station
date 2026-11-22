@@ -1,6 +1,6 @@
 {
     "name": "server",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A server for the telemetry watch project.",
     "main": "index.js",
     "scripts": {
@@ -14,15 +14,20 @@
     "license": "UNLICENSED",
     "type": "module",
     "dependencies": {
+        "cors": "^2.8.6",
         "express": "^5.3.0"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
+        "@types/cors": "^2.8.19",
         "@types/express": "^5.0.6",
         "@types/node": "^26.6.6",
         "eslint": "^10.15.0",
         "tsx": "^4.23.15",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.73.0"
+    },
+    "allowScripts": {
+        "esbuild@0.28.2": true
     }
 }

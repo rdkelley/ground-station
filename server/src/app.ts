@@ -1,9 +1,11 @@
 import express, { Request, Response } from 'express'
 import satellites from './models/satellite.js'
 import { isIsoDateTime } from './util.js'
+import cors from 'cors'
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 /**

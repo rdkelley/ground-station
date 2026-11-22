@@ -1,8 +1,5 @@
+const isoPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/
+
 export function isIsoDateTime(value: string) {
-    try {
-        Temporal.Instant.from(value)
-        return true
-    } catch {
-        return false
-    }
+    return isoPattern.test(value) && !Number.isNaN(Date.parse(value))
 }
