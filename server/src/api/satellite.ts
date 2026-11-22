@@ -1,6 +1,9 @@
 import { db } from '../db.js'
 import { Telemetry } from '../types.js'
 
+/* 
+* Satellite class to abstract out SQL syntax from API implementation
+*/
 class Satellite {
     get(id: string) {
         return db
@@ -24,10 +27,10 @@ class Satellite {
             t.position?.[2] ?? null,
         )
     }
-    delete(satelliteId: string) {
+    delete(satId: string) {
         return db
             .prepare('DELETE FROM telemetry WHERE satelliteId = ?')
-            .run(satelliteId).changes
+            .run(satId).changes
     }
 }
 

@@ -6,6 +6,14 @@ const app = express()
 
 app.use(express.json())
 
+/**
+ * This file contains the server's endpoints, responses and input validation.
+ * 
+ * Our entry point into the app is index.ts. This file serves as the primary
+ * controller for our endpoint logic. From here, `api/satellite.js` methods are called, which 
+ * in turn read and write to the in-memory database.
+ */
+
 app.get('/telemetry', (req: Request, res: Response) => {
     try {
         const sats = satellites.getAll()
