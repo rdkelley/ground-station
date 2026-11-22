@@ -3,10 +3,16 @@ import { DatabaseSync } from 'node:sqlite'
 
 export const db = new DatabaseSync(':memory:')
 
+// Table schema. timestamp has check to ensure
+// ISO 8601 datetime. This is also checked in POST
+// reqs as part of validation.
 db.exec(`
   CREATE TABLE telemetry (
-    satelliteId TEXT PRIMARY KEY,
-    timestamp TEXT NOT NULL,
+    satelliteId TEXT PRIMARY KEY NOT NULL,
+    timestamp TEXT NOT NULL CHECK (
+        timestamp GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]*'
+        AND datetime(timestamp) IS NOT NULL
+    ),
     altitude FLOAT NOT NULL,
     velocity FLOAT NOT NULL,
     status TEXT NOT NULL,
