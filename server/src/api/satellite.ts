@@ -3,7 +3,9 @@ import { Telemetry } from '../types.js'
 
 class Satellite {
     get(id: string) {
-        return db.prepare('SELECT * FROM telemetry WHERE satelliteId = ?').get(id)
+        return db
+            .prepare('SELECT * FROM telemetry WHERE satelliteId = ?')
+            .get(id)
     }
     getAll() {
         return db.prepare('SELECT * FROM telemetry').all()
@@ -21,6 +23,11 @@ class Satellite {
             t.position?.[1] ?? null,
             t.position?.[2] ?? null,
         )
+    }
+    delete(satelliteId: string) {
+        return db
+            .prepare('DELETE FROM telemetry WHERE satelliteId = ?')
+            .run(satelliteId).changes
     }
 }
 

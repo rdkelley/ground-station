@@ -65,5 +65,15 @@ app.post('/telemetry', (req: Request, res: Response) => {
         res.status(400).json({ message: 'Could not add satellite' })
     }
 })
+app.delete(
+    '/telemetry/:satid',
+    (req: Request<{ satid: string }>, res: Response) => {
+        const deleted = satellites.delete(req.params.satid)
+        if (deleted === 0) {
+            return res.status(404).json({ message: 'Satellite not found' })
+        }
+        res.status(200).end()
+    },
+)
 
 export default app

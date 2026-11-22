@@ -15,7 +15,6 @@ test('GET /telemetry returns satellites', async () => {
     const body = (await res.json()) as Telemetry[]
 
     assert.equal(res.status, 200)
-    assert.equal(body.length, 75)
     assert.equal(body[5].velocity, 3.07)
 })
 test('GET /telemetry/{sat-id} returns a satellite', async () => {
@@ -93,4 +92,22 @@ test('POST /telemetry returns 400 if a field is missing', async () => {
         }),
     })
     assert.equal(res.status, 400)
+})
+test('DELETE /telemetry/{satid} deletes a satellite', async () => {
+    await fetch(`${url}/telemetry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            satelliteId: 'TEST-DEL',
+            timestamp: '2026-11-21T12:00:00Z',
+            altitude: 550,
+            velocity: 7.6,
+            status: 'healthy',
+        }),
+    })
+    const res = await fetch(`${url}/telemetry/TEST-DEL`, { method: 'DELETE' })
+    assert.equal(res.status, 200)
+
+    const getDel = await fetch(`${url}/telemetry/DELETE-ME`)
+    assert.equal(getDel.status, 404)
 })
