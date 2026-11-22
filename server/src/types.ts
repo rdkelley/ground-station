@@ -6,3 +6,19 @@ export interface Telemetry {
     status: string
     position?: [number, number, number]
 }
+
+export interface TelemetryQuery {
+    satelliteId?: string
+    status?: string
+    sort?: string
+    order?: string
+    limit: number
+    offset: number
+}
+
+export interface TelemetryResponse {
+    data: Telemetry[]
+    total: number
+    page: number
+    limit: number
+}

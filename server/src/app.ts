@@ -8,6 +8,8 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+const PAGE_SIZE = 25
+
 /**
  * This file contains the server's endpoints, responses and input validation.
  *
@@ -16,10 +18,38 @@ app.use(express.json())
  * in turn read and write to the in-memory database.
  */
 
+// GET /telemetry allows for sorting, pagination and filtering by status & satId
 app.get('/telemetry', (req: Request, res: Response) => {
+    // Default to page size === 1, throw 422 if page size is invalid
+    const page = req.query.page === undefined ? 1 : Number(req.query.page)
+    if (!Number.isInteger(page) || page < 1) {
+        return res.status(422).json({ message: 'Page size must be positive, whole num' })
+    }
+
+    // Params can be defined strings or undefined depending on the query
+    let satId: string | undefined
+    if (typeof req.query.satId === 'string') satId = req.query.satId
+
+    let status: string | undefined
+    if (typeof req.query.status === 'string') status = req.query.status
+
+    let sort: string | undefined
+    if (typeof req.query.sort === 'string') sort = req.query.sort
+
+    let order: string | undefined
+    if (typeof req.query.order === 'string') order = req.query.order
+
     try {
-        const sats = satellites.getAll()
-        res.json(sats)
+        const { data, total } = satellites.getAll({
+            satelliteId: satId,
+            status,
+            sort,
+            order,
+            limit: PAGE_SIZE,
+            offset: (page - 1) * PAGE_SIZE,
+        })
+
+        res.json({ data, total, page, limit: PAGE_SIZE })
     } catch {
         res.status(500).json({ message: "Couldn't get satellites" })
     }
