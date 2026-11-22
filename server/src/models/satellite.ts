@@ -1,14 +1,12 @@
 import { db } from '../db.js'
 import { Telemetry } from '../types.js'
 
-/* 
-* Satellite class to abstract out SQL syntax from API implementation
-*/
+/*
+ * Satellite class to abstract out SQL syntax from API implementation
+ */
 class Satellite {
     get(id: string) {
-        return db
-            .prepare('SELECT * FROM telemetry WHERE satelliteId = ?')
-            .get(id)
+        return db.prepare('SELECT * FROM telemetry WHERE satelliteId = ?').get(id)
     }
     getAll() {
         return db.prepare('SELECT * FROM telemetry').all()
@@ -28,9 +26,7 @@ class Satellite {
         )
     }
     delete(satId: string) {
-        return db
-            .prepare('DELETE FROM telemetry WHERE satelliteId = ?')
-            .run(satId).changes
+        return db.prepare('DELETE FROM telemetry WHERE satelliteId = ?').run(satId).changes
     }
 }
 

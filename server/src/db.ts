@@ -17,9 +17,7 @@ db.exec(`
 `)
 
 const lines = readFileSync('data/telemetry.csv', 'utf8').trim().split(/\r?\n/)
-const insert = db.prepare(
-    'INSERT INTO telemetry VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-)
+const insert = db.prepare('INSERT INTO telemetry VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
 for (const line of lines.slice(1)) {
     insert.run(...line.split(','))
 }
