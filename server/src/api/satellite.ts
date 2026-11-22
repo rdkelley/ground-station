@@ -2,6 +2,9 @@ import { db } from '../db.js'
 import { Telemetry } from '../types.js'
 
 class Satellite {
+    get(id: string) {
+        return db.prepare('SELECT * FROM telemetry WHERE satelliteId = ?').get(id)
+    }
     getAll() {
         return db.prepare('SELECT * FROM telemetry').all()
     }

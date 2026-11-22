@@ -14,8 +14,18 @@ app.get('/telemetry', (req: Request, res: Response) => {
         res.status(500).json({ message: "Couldn't get satellites" })
     }
 })
+app.get(
+    '/telemetry/:satid',
+    (req: Request<{ satid: string }>, res: Response) => {
+        const satid = req.params.satid
+        const sat = satellites.get(satid)
+        if (!sat) {
+            return res.status(404).json({ message: 'Not found' })
+        }
+        res.json(sat)
+    },
+)
 app.post('/telemetry', (req: Request, res: Response) => {
-    // Validation
     if (!req.body)
         return res.status(400).json({ message: 'Satellite data missing' })
 

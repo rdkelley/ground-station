@@ -1,4 +1,4 @@
-export type Telemetry = {
+export interface Telemetry {
     satelliteId: string
     timestamp: string
     altitude: number

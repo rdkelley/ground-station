@@ -18,6 +18,13 @@ test('GET /telemetry returns satellites', async () => {
     assert.equal(body.length, 75)
     assert.equal(body[5].velocity, 3.07)
 })
+test('GET /telemetry/{sat-id} returns a satellite', async () => {
+    const res = await fetch(`${url}/telemetry/SAT-15`)
+    const body = (await res.json()) as Telemetry
+
+    assert.equal(res.status, 200)
+    assert.equal(body.velocity, 4.19)
+})
 test('POST /telemetry adds a new satellite', async () => {
     const res = await fetch(`${url}/telemetry`, {
         method: 'POST',
