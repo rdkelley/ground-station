@@ -1,3 +1,9 @@
+## API
+
+`/telemetry?sort=altitude&order=asc&page=1&status=critical&satId=SAT-59`
+
+
+
 ## Deployment
 
 Both server and GUI are already deployed -- these deploy scripts are included for reference.
@@ -29,11 +35,6 @@ npm version patch
 The GUI is deployed at <https://main.d1picqe4uvgggp.amplifyapp.com>.
 
 A script to deploy to an already configured Amplify instance is provided. To run:
-
-Prerequisites:
-
-- `zip`
-- An existing Amplify app with a `main` branch
 
 Create a `.env.production` file in `/gui`:
 
