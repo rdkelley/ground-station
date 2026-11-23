@@ -1,5 +1,6 @@
 <template>
     <main>
+        <div class="error" v-if="telemetry.error">Error: {{ telemetry.error }}</div>
         <div class="title">
             <h1>Ground Station</h1>
             <Satellite :size="24" />
@@ -18,10 +19,13 @@ import teleTable from '@/components/table.vue'
 import toolbar from '@/components/toolbar.vue'
 import { Satellite } from '@lucide/vue'
 import { version } from '../package.json'
+import { useTelemetryStore } from '@/stores/telemetry'
 
 import '@/reset.sass'
 
 const openPanel = ref(false)
+
+const telemetry = useTelemetryStore()
 </script>
 
 <style lang="sass">
@@ -47,4 +51,7 @@ main
         bottom: 0
         right: 0
         padding: 1rem
+    .error
+        background: red
+        text-align: center
 </style>

@@ -80,7 +80,13 @@ const pageCount = computed(() =>
 
 function sort(key: string) {
     const { sort, order } = telemetry.params
-    const next = sort === key && order === 'asc' ? 'desc' : 'asc'
+    // Default to ascending
+    let next: 'asc' | 'desc' = 'asc'
+
+    // If already ascending, flip to descending
+    if (sort === key && order === 'asc') {
+        next = 'desc'
+    }
 
     telemetry.getAll({ page: 1, sort: key, order: next })
 }
@@ -149,6 +155,8 @@ onMounted(async () => {
         background: none
         color: white
         cursor: pointer
+        position: relative
+        top: 4px
         &:hover
             color: red
 </style>

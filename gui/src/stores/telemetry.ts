@@ -35,7 +35,7 @@ export const useTelemetryStore = defineStore('telemetry', () => {
             total.value = body.total
             limit.value = body.limit
         } catch {
-            error.value = 'Could not load telemetry data'
+            error.value = 'Could not load telemetry data. Is the server offline?'
         } finally {
             loading.value = false
         }
