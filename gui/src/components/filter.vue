@@ -8,15 +8,17 @@
             <option value="critical">Critical</option>
         </select>
         <button type="button" @click="clear">Clear</button>
+        <Loader v-if="telemetry.loading" class="load" :size="20" />
     </form>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
 import { useTelemetryStore } from '@/stores/telemetry'
+import { Loader } from '@lucide/vue'
 import type { Status } from '@/types'
 
-const store = useTelemetryStore()
+const telemetry = useTelemetryStore()
 
 const satId = ref('')
 const status = ref<Status | ''>('')
@@ -24,7 +26,7 @@ const status = ref<Status | ''>('')
 let timer: ReturnType<typeof setTimeout>
 
 function filter() {
-    store.getAll({
+    telemetry.getAll({
         page: 1,
         satId: satId.value,
         status: status.value || undefined,
@@ -50,4 +52,8 @@ watch(satId, () => {
 form
     display: flex
     gap: 0.5em
+    .load
+        position: relative
+        top: 5px
+        animation: spin 2s linear infinite
 </style>

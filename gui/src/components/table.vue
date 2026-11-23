@@ -142,6 +142,7 @@ onMounted(async () => {
             text-align: right
         &.status
             text-align: center
+            text-transform: uppercase
     .sort
         display: inline-flex
         align-items: center

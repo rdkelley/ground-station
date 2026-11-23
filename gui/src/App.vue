@@ -54,4 +54,8 @@ main
     .error
         background: red
         text-align: center
+
+@keyframes spin
+    to
+        transform: rotate(360deg)
 </style>
