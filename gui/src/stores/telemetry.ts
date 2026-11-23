@@ -18,12 +18,13 @@ export const useTelemetryStore = defineStore('telemetry', () => {
     const data = ref<Telemetry[]>([])
     const loading = ref(false)
     const error = ref('')
+    const success = ref('')
 
     const total = ref(0)
     const limit = ref(0)
     const params = ref<TelemetryParams>({})
 
-    // Builds a querystring based on previous params and 
+    // Builds a querystring based on previous params and
     // submits to GET /telemetry
     async function getAll(updates: TelemetryParams = {}) {
         params.value = { ...params.value, ...updates }
@@ -31,6 +32,7 @@ export const useTelemetryStore = defineStore('telemetry', () => {
 
         loading.value = true
         error.value = ''
+
         const query = new URLSearchParams({ page: String(page) })
 
         if (satId) query.set('satId', satId)
@@ -79,6 +81,7 @@ export const useTelemetryStore = defineStore('telemetry', () => {
             }
 
             await getAll()
+            notify(`${entry.satelliteId} added`)
             return ''
         } catch {
             return 'Could not add a new satellite. Is the server offline?'
@@ -100,5 +103,28 @@ export const useTelemetryStore = defineStore('telemetry', () => {
         }
     }
 
-    return { data, total, limit, params, loading, error, getAll, get, create, remove }
+    let noticeTimer: ReturnType<typeof setTimeout>
+    function notify(message: string) {
+        success.value = message
+
+        clearTimeout(noticeTimer)
+        noticeTimer = setTimeout(() => {
+            success.value = ''
+        }, 4000)
+    }
+
+    return {
+        data,
+        total,
+        limit,
+        params,
+        loading,
+        error,
+        success,
+        getAll,
+        get,
+        create,
+        remove,
+        notify,
+    }
 })

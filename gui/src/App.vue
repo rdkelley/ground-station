@@ -1,6 +1,7 @@
 <template>
     <main>
         <div class="error" v-if="telemetry.error">Error: {{ telemetry.error }}</div>
+        <div class="success" v-if="telemetry.success">Success: {{ telemetry.success }}</div>
         <div class="title">
             <h1>Ground Station</h1>
             <Satellite :size="24" />
@@ -54,6 +55,14 @@ main
     .error
         background: red
         text-align: center
+    .success
+        background: green
+        text-align: center
+        position: fixed
+        left: 50%
+        transform: translateX(-50%)
+        z-index: 20
+        padding: 0.25rem 1rem
 
 @keyframes spin
     to
