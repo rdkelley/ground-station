@@ -48,6 +48,24 @@ Ex: [`/telemetry/SAT-15`](https://te-32bbfbf123304ae0a8da76fae7c4727f.ecs.us-wes
 
 **DELETE /telemetry/:satid** -- deletes a satellite, or returns 404 if it doesn't exist.
 
+## Testing
+
+Both server and GUI have automated tests.
+
+To test server endpoints:
+
+```
+cd server
+npm test
+```
+
+To run unit tests for GUI data retreival:
+
+```
+cd gui
+npm run test:unit
+```
+
 ## Deployment
 
 Both server and GUI are already deployed -- these deploy scripts are included for reference.
