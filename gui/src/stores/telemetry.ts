@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Telemetry } from '@/types'
+import type { Telemetry, TelemetryParams } from '@/types'
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
 
@@ -10,36 +10,30 @@ export const useTelemetryStore = defineStore('telemetry', () => {
     const error = ref('')
 
     const total = ref(0)
+    const limit = ref(0)
+    const params = ref<TelemetryParams>({})
 
-    async function getAll({
-        page,
-        satId,
-        sort,
-        order,
-        status,
-    }: {
-        page?: number
-        satId?: string
-        sort?: string
-        order?: 'asc' | 'desc'
-        status?: 'healthy' | 'warning' | 'critical'
-    } = {}) {
+    async function getAll(updates: TelemetryParams = {}) {
+        params.value = { ...params.value, ...updates }
+        const { page = 1, satId, sort, order, status } = params.value
+
         loading.value = true
         error.value = ''
-        const params = new URLSearchParams({ page: String(page ?? 1) })
+        const query = new URLSearchParams({ page: String(page) })
 
-        if (satId) params.set('satId', satId)
-        if (sort) params.set('sort', sort)
-        if (order) params.set('order', order)
-        if (status) params.set('status', status)
+        if (satId) query.set('satId', satId)
+        if (sort) query.set('sort', sort)
+        if (order) query.set('order', order)
+        if (status) query.set('status', status)
 
         try {
-            const res = await fetch(`${API_URL}/telemetry?${params}`)
+            const res = await fetch(`${API_URL}/telemetry?${query}`)
             if (!res.ok) throw new Error()
 
             const body = await res.json()
             data.value = body.data
             total.value = body.total
+            limit.value = body.limit
         } catch {
             error.value = 'Could not load telemetry data'
         } finally {
@@ -47,5 +41,20 @@ export const useTelemetryStore = defineStore('telemetry', () => {
         }
     }
 
-    return { data, total, loading, error, getAll }
+    async function remove(satId: string) {
+        error.value = ''
+
+        try {
+            const res = await fetch(`${API_URL}/telemetry/${encodeURIComponent(satId)}`, {
+                method: 'DELETE',
+            })
+            if (!res.ok) throw new Error()
+
+            await getAll()
+        } catch {
+            error.value = 'Could not delete satellite'
+        }
+    }
+
+    return { data, total, limit, params, loading, error, getAll, remove }
 })
