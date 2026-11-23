@@ -2,12 +2,20 @@
 
 This application consists of a backend that serves satellite telemetry data and a frontend that displays data in a (hopefully visually appealing) UI.
 
-Some notes on its implementation:
+Implementation:
 
 - The frontend is built with Vue (TypeScript), using Pinia for state management
 - The backend is built with Express and TypeScript
 - The backend connects to an in-memory SQLite database that is repopulated on server restart
-- The DB is populated on server start with 250 mock examples
+- The DB is populated with 250 mock examples
+
+Some notes regarding decisions made:
+
+ Sorting, filtering and pagination is only done on the backend, rather than through delivering bulk data to the frontend and letting the GUI determine what to show. The `/gui` pinia action that calls `GET /telemetry` builds a query string based on the previous and current selected table params. There are a number of advanatges to this, including always current data, and allowing SQL to do the sorting/filtering, but its done the expense of a small load on every table action.
+
+All server endpoints are covered by at least 1 test, although this could be expanded to include more involved queries and all status codes.
+
+I wish I could reduce the number of dev dependencies in `/gui` -- they are installed automatically by Vue's app creator; most have to do with linting, which I selected. I try to keep production dependencies to a minimum.
 
 ## Quick Start
 
