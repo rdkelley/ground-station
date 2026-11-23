@@ -13,7 +13,7 @@ Some notes on its implementation:
 
 **The application is deployed at <https://main.d1picqe4uvgggp.amplifyapp.com>**
 
-To run locally in a dev environment, you will need Node.js 26 (eariler versions my still work, but at least greater than 22.13.0 for `node:sqlite`)
+To run locally in a dev environment, you will need Node.js 26. Previous versions may throw compatibility errors on `npm install`.
 
 ```
 # Start server
@@ -21,8 +21,8 @@ cd server
 npm install
 npm run dev
 
-# Start GUI
-../gui
+# Start GUI -- in another terminal
+cd gui
 npm install
 npm run dev
 ```
