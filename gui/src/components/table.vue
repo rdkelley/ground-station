@@ -38,14 +38,13 @@
                         <tr v-for="sat in telemetry.data" :key="sat.satelliteId">
                             <td class="satId">{{ sat.satelliteId }}</td>
                             <td class="timestamp">{{ sat.timestamp }}</td>
-                            <td class="altitude">{{ sat.altitude }}</td>
-                            <td class="velocity">{{ sat.velocity }}</td>
+                            <td class="altitude">{{ sat.altitude.toFixed(1) }}</td>
+                            <td class="velocity">{{ sat.velocity.toFixed(2) }}</td>
                             <td class="status">{{ sat.status }}</td>
                             <td>
                                 <button
                                     type="button"
                                     class="delete"
-                                    :title="`Delete ${sat.satelliteId}`"
                                     @click="onDelete(sat.satelliteId)"
                                 >
                                     <Trash2 :size="16" />
