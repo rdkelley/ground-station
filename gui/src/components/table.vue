@@ -11,9 +11,13 @@
             <table>
                 <thead>
                     <tr>
-                        <th v-for="col in columns" :key="col.key">
+                        <th
+                            v-for="col in columns"
+                            :key="col.key"
+                            :class="`${col.label.toLowerCase().split(' ')[0]}`"
+                        >
                             <button type="button" class="sort" @click="sort(col.key)">
-                                {{ col.label }}
+                                <div class="col-label">{{ col.label }}</div>
                                 <template v-if="telemetry.params.sort === col.key">
                                     <ArrowDown
                                         v-if="telemetry.params.order === 'desc'"
@@ -32,11 +36,11 @@
                     </tr>
                     <template v-else>
                         <tr v-for="sat in telemetry.data" :key="sat.satelliteId">
-                            <td>{{ sat.satelliteId }}</td>
-                            <td>{{ sat.timestamp }}</td>
-                            <td>{{ sat.altitude }}</td>
-                            <td>{{ sat.velocity }}</td>
-                            <td>{{ sat.status }}</td>
+                            <td class="satId">{{ sat.satelliteId }}</td>
+                            <td class="timestamp">{{ sat.timestamp }}</td>
+                            <td class="altitude">{{ sat.altitude }}</td>
+                            <td class="velocity">{{ sat.velocity }}</td>
+                            <td class="status">{{ sat.status }}</td>
                             <td>
                                 <button
                                     type="button"
@@ -64,10 +68,10 @@ const telemetry = useTelemetryStore()
 
 const columns = [
     { key: 'satelliteId', label: 'Satellite ID' },
-    { key: 'timestamp', label: 'Timestamp (UTC)' },
+    { key: 'timestamp', label: 'Timestamp' },
     { key: 'altitude', label: 'Altitude (km)' },
     { key: 'velocity', label: 'Velocity (km/s)' },
-    { key: 'status', label: 'Health Status' },
+    { key: 'status', label: 'Status' },
 ]
 
 const page = computed(() => telemetry.params.page ?? 1)
@@ -118,10 +122,21 @@ onMounted(async () => {
         top: 0
         z-index: 1
         background: black
+        text-align: left
+        &.altitude, &.velocity
+            text-align: right
+        &.status
+            text-align: center
     th, td
         padding: 0.5rem 0.75rem
         text-align: center
         border-bottom: 1px solid white
+    td
+        text-align: left
+        &.altitude, &.velocity
+            text-align: right
+        &.status
+            text-align: center
     .sort
         display: inline-flex
         align-items: center
