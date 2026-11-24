@@ -51,9 +51,16 @@ watch(satId, () => {
 <style lang="sass">
 form
     display: flex
-    gap: 0.5em
+    flex-wrap: wrap
+    gap: 0.5rem
     .load
         position: relative
         top: 5px
         animation: spin 2s linear infinite
+    @media (max-width: 600px)
+        input, select, button
+            flex: 1 1 100%
+            height: 1.6rem
+        .load
+            display: none
 </style>

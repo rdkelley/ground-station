@@ -118,6 +118,8 @@ onMounted(async () => {
     height: calc(100vh - 15rem)
     overflow-y: scroll
     border: 1px solid #ff6214
+    @media (max-width: 600px)
+        height: calc(100vh - 19rem)
     table
         width: 100%
         border-collapse: separate

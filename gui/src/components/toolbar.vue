@@ -22,8 +22,12 @@ const emit = defineEmits<{
     justify-content: space-between
     align-items: center
     margin-bottom: 1rem
+    @media (max-width: 600px)
+        flex-direction: column
+        align-items: stretch
+        gap: 0.5rem
+        padding: 0.5rem
     .rocket
         position: relative
         top: 3px
-
 </style>

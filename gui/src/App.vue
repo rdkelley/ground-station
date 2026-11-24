@@ -38,6 +38,10 @@ main
     font-family: 'Ubuntu Mono', monospace
     padding: 1rem
     height: 100vh
+    @media (max-width: 600px)
+        padding: 0
+        .title
+            padding: 0.5rem
     button
         border-radius: 5px
         height: 2rem
